@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package audio_gateway;
+
+service AudioService {
+  // Subscribe to the audio stream.
+  // The server will stream AudioChunks as they are received via RTP.
+  rpc SubscribeAudio(Empty) returns (stream AudioChunk);
+}
+
+message Empty {}
+
+message AudioChunk {
+  bytes data = 1;      // Raw PCM or encoded audio data
+  int64 timestamp = 2; // Timestamp in milliseconds
+  int32 seq_num = 3;   // RTP sequence number
+}
